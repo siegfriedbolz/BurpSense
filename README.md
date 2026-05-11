@@ -1,14 +1,18 @@
 <h1 align="center">BurpSense</h1>
 <div align="center">
   
-[![Build and Publish Release](https://github.com/TheArqsz/BurpSense/actions/workflows/release.yml/badge.svg)](https://github.com/TheArqsz/BurpSense/actions/workflows/release.yml)
+[![Build and Publish Release](https://github.com/siegfriedbolz/BurpSense/actions/workflows/release.yml/badge.svg)](https://github.com/siegfriedbolz/BurpSense/actions/workflows/release.yml)
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/arqsz.burpsense?include_prereleases&style=flat-square&label=Visual%20Studio%20Marketplace&color=blue)](https://marketplace.visualstudio.com/items?itemName=arqsz.burpsense)
-[![Open VSX Version](https://img.shields.io/open-vsx/v/arqsz/burpsense?style=flat-square&label=Open%20VSX%20Marketplace)](https://open-vsx.org/extension/arqsz/burpsense)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/siegfriedbolz.burpsense-cursor?include_prereleases&style=flat-square&label=Visual%20Studio%20Marketplace&color=blue)](https://marketplace.visualstudio.com/items?itemName=siegfriedbolz.burpsense-cursor)
+[![Open VSX Version](https://img.shields.io/open-vsx/v/siegfriedbolz/burpsense-cursor?style=flat-square&label=Open%20VSX%20Marketplace)](https://open-vsx.org/extension/siegfriedbolz/burpsense-cursor)
 
 </div>
 
 BurpSense bridges the gap between security testing in Burp Suite and your development environment in VS Code. The core idea is simple: instead of constantly switching between tools to cross-reference vulnerabilities with source code, you can map Burp's findings directly to the lines where issues occur. This gives you inline diagnostics, full advisory details and a persistent record of what needs attention.
+
+## Fork, upstream, and compatibility
+
+This repository is a **fork** of the original **BurpSense** project by **Arqsz** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense) on GitHub; VS Code Marketplace extension **`arqsz.burpsense`**). **Siegfried-Thor Bolz** maintains this fork ([siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense)) with the goal of keeping the stack compatible with **Cursor 3** (reference build: **Cursor 3.3.30**) and **Burp Suite 2026** (reference build: **v2026.4.2** Professional or Community), including the Java bridge against **Montoya** `montoya-api` **2026.4**. Standard **VS Code** on the declared `engines.vscode` line remains supported alongside Cursor.
 
 ![alt text](assets/main_view.png)
 
@@ -35,12 +39,12 @@ Communication happens over HTTP for queries and WebSocket for real-time updates.
 ## System requirements
 
 **Burp Bridge:**
-- Burp Suite with Montoya API support (`2025.12` or later)
+- **Burp Suite** **v2026.4.2** (or the same **2026.4** release line; Professional or Community) with the Montoya extension API. The bridge is built against `montoya-api` **2026.4** (Maven Central), matching that Burp release train.
 - Java 21 or higher
 - Maven 3.6+ (for building from source)
 
 **VS Code Extension:**
-- VS Code 1.108.1 or higher
+- **VS Code 1.118.0** or newer, or **Cursor 3** (reference: **Cursor 3.3.30**). The extension declares `engines.vscode` **^1.118.0**; use current Cursor/VS Code updates for full compatibility.
 - Node.js 18.0.0 or higher (for building from source)
 
 ## Installation and setup
@@ -60,11 +64,11 @@ This produces `target/burpsense-bridge-*.jar`. Load it in Burp Suite through the
 
 Generate an API token using the "Generate New Key" button and copy it somewhere safe. Then click "Start Server" to begin listening. By default, the server binds to `127.0.0.1:1337`, but you can change this in the settings panel if needed.
 
-> The bridge requires Burp Suite with the new Montoya API support.
+> The bridge requires Burp Suite with the Montoya extension API (current **2026.4** Burp line).
 
 ### VS Code extension
 
-You can install from [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=arqsz.burpsense), [Open VSX Registry](https://open-vsx.org/extension/arqsz/burpsense), a packaged VSIX or run from source:
+You can install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=siegfriedbolz.burpsense-cursor), [Open VSX Registry](https://open-vsx.org/extension/siegfriedbolz/burpsense-cursor), a packaged VSIX or run from source:
 
 **From VSIX:**
 
@@ -75,7 +79,7 @@ npm run compile
 npx vsce package
 ```
 
-This creates `burpsense-*.vsix`. In VS Code, go to the Extensions view (`Ctrl+Shift+X`), click the "..." menu, and select "Install from VSIX".
+This creates `burpsense-cursor-*.vsix`. In VS Code or Cursor, go to the Extensions view (`Ctrl+Shift+X`), click the "..." menu, and select "Install from VSIX".
 
 **From source (for development):**
 
@@ -162,15 +166,15 @@ Settings live in VS Code preferences under the "BurpSense" section:
 
 ```json
 {
-  "burpsense.bridgeIp": "127.0.0.1",
-  "burpsense.bridgePort": 1337,
-  "burpsense.inScopeOnly": true,
-  "burpsense.minSeverity": "INFORMATION",
-  "burpsense.minConfidence": "TENTATIVE",
-  "burpsense.showDriftNotifications": true,
-  "burpsense.confirmMappingDeletion": true,
-  "burpsense.autoCleanOrphanedMappings": false,
-  "burpsense.logLevel": "info"
+  "burpsense-cursor.bridgeIp": "127.0.0.1",
+  "burpsense-cursor.bridgePort": 1337,
+  "burpsense-cursor.inScopeOnly": true,
+  "burpsense-cursor.minSeverity": "INFORMATION",
+  "burpsense-cursor.minConfidence": "TENTATIVE",
+  "burpsense-cursor.showDriftNotifications": true,
+  "burpsense-cursor.confirmMappingDeletion": true,
+  "burpsense-cursor.autoCleanOrphanedMappings": false,
+  "burpsense-cursor.logLevel": "info"
 }
 ```
 
@@ -443,5 +447,8 @@ burpsense/
 [MIT](LICENSE.md)
 
 ## Acknowledgments
+
+- **Arqsz** — original **BurpSense** author; upstream repository [TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense) and extension **`arqsz.burpsense`** on the Visual Studio Marketplace.
+- **Siegfried-Thor Bolz** — fork maintainer: **Cursor 3** and **Burp Suite v2026** compatibility, packaging, and documentation in [siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense).
 
 Built using Burp Suite's Montoya API, Undertow for HTTP/WebSocket serving, native fetch and ws for client networking, and sanitize-html for XSS protection in advisory panels.

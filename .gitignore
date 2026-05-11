@@ -1,6 +1,7 @@
 target/
 build/
 **/node_modules/
+**/.npm-cache/
 out/
 dist/
 *.jar

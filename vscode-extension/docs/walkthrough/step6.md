@@ -53,3 +53,7 @@ Click the **refresh icon** (↻) to fetch latest issues from Burp Suite.
 - Collapse duplicate issues to reduce clutter
 - Focus on unique security problems
 - Easily compare multiple instances of same issue
+
+---
+
+**About this build:** **BurpSense for Cursor** is maintained by **Siegfried-Thor Bolz** as a fork of **Arqsz**’s original **BurpSense** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense)). Reference compatibility: **Cursor 3.3.30** and **Burp Suite v2026.4.2**.

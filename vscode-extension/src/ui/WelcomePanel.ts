@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { COMMANDS, CONFIG_SECTION, EXTENSION_ID, WALKTHROUGH } from '../constants';
+import { COMMANDS, CONFIG_SECTION, EXTENSION_ID, WEBVIEW_IDS, WALKTHROUGH } from '../constants';
 
 /**
  * Welcome panel shown on first launch.
@@ -15,8 +15,8 @@ export class WelcomePanel {
      */
     public static show(context: vscode.ExtensionContext): void {
         const panel = vscode.window.createWebviewPanel(
-            'burpsenseWelcome',
-            'Welcome to BurpSense',
+            WEBVIEW_IDS.WELCOME,
+            'Welcome to BurpSense for Cursor',
             vscode.ViewColumn.One,
             {
                 enableScripts: true,
@@ -218,12 +218,23 @@ export class WelcomePanel {
             margin-top: 20px;
             font-size: 0.95em;
         }
+
+        .fork-note {
+            font-size: 0.9em;
+            color: var(--vscode-descriptionForeground);
+            margin-top: 20px;
+            line-height: 1.55;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
     <div class="hero">
-        <h1>Welcome to BurpSense</h1>
-        <p>Bring Burp Suite security findings directly into VS Code</p>
+        <h1>Welcome to BurpSense for Cursor</h1>
+        <p>Bring Burp Suite security findings directly into VS Code or Cursor</p>
+        <p class="fork-note">Fork maintained by <strong>Siegfried-Thor Bolz</strong>, based on the original <strong>BurpSense</strong> by <strong>Arqsz</strong> (upstream: github.com/TheArqsz/BurpSense). Targets <strong>Cursor 3</strong> (reference: 3.3.30) and <strong>Burp Suite v2026</strong> (reference: v2026.4.2).</p>
     </div>
     
     <div class="features">
@@ -280,7 +291,7 @@ export class WelcomePanel {
         </ol>
         
         <div class="tip">
-            💡 <strong>Tip:</strong> Use the status bar to quickly access common actions like refreshing issues or adjusting filters.
+            <strong>Tip:</strong> Use the status bar to quickly access common actions like refreshing issues or adjusting filters.
         </div>
     </div>
     

@@ -2,9 +2,9 @@
  * Extension configuration and constants.
  */
 
-export const EXTENSION_ID = 'arqsz.burpsense';
-export const EXTENSION_NAME = 'BurpSense';
-export const CONFIG_SECTION = 'burpsense';
+export const EXTENSION_ID = 'siegfriedbolz.burpsense-cursor';
+export const EXTENSION_NAME = 'BurpSense for Cursor';
+export const CONFIG_SECTION = 'burpsense-cursor';
 
 /** Command identifiers for VS Code command palette and programmatic execution */
 export const COMMANDS = {
@@ -197,7 +197,13 @@ export const BUTTONS = {
     STAY_OFFLINE: 'Stay Offline'
 } as const;
 
-export const DIAGNOSTIC_SOURCE = 'BurpSense';
+export const DIAGNOSTIC_SOURCE = 'BurpSense for Cursor';
+
+/** Webview panel viewType identifiers (must not collide with other extensions) */
+export const WEBVIEW_IDS = {
+    WELCOME: 'burpsenseCursorWelcome',
+    DRIFT_DETAILS: 'burpsenseCursorDriftDetails',
+} as const;
 
 export const TREE_VIEW = {
     ID: `${CONFIG_SECTION}.issuesView`,

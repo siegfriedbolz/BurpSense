@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { CONFIG_KEYS, CONFIG_SECTION, DIAGNOSTIC_SOURCE, DRIFT, LIMITS, SIMILARITY } from '../constants';
+import { CONFIG_KEYS, CONFIG_SECTION, DIAGNOSTIC_SOURCE, DRIFT, LIMITS, SIMILARITY, WEBVIEW_IDS } from '../constants';
 import { BurpMapping, DriftDetail, LineDriftResult, MappingProcessResult } from '../types';
 import { ConnectionManager } from './ConnectionManager';
 import { Logger } from './Logger';
@@ -599,7 +599,7 @@ export class DiagnosticProvider {
      */
     private showDriftDetails(drifts: DriftDetail[]): void {
         const panel = vscode.window.createWebviewPanel(
-            'burpsenseDriftDetails',
+            WEBVIEW_IDS.DRIFT_DETAILS,
             'Line Drift Corrections',
             vscode.ViewColumn.Beside,
             {}

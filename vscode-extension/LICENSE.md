@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) 2026 Arqsz
+Copyright (c) 2026 Arqsz (original BurpSense, https://github.com/TheArqsz/BurpSense)
+Copyright (c) 2026 Siegfried-Thor Bolz (fork maintenance: Cursor 3 e.g. 3.3.30, Burp Suite v2026 e.g. v2026.4.2, and related VS Code extension changes)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

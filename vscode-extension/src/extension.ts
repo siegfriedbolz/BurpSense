@@ -25,7 +25,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     Logger.info('BurpSense extension activating...', 'Lifecycle');
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(e => {
-            if (e.affectsConfiguration('burpsense.logLevel')) {
+            if (e.affectsConfiguration(CONFIG_KEYS.LOG_LEVEL)) {
                 Logger.updateLogLevel();
                 Logger.info('Log level updated', 'Config');
             }
@@ -182,7 +182,7 @@ function registerEventHandlers(
 
             if (e.affectsConfiguration(CONFIG_KEYS.IN_SCOPE_ONLY)) {
                 const newState = vscode.workspace.getConfiguration().get(CONFIG_KEYS.IN_SCOPE_ONLY, true);
-                await vscode.commands.executeCommand('setContext', 'burpsense.inScopeOnly', newState);
+                await vscode.commands.executeCommand('setContext', CONFIG_KEYS.IN_SCOPE_ONLY, newState);
             }
 
             issueTreeProvider.refresh();
