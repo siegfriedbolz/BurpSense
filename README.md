@@ -1,6 +1,8 @@
-<h1 align="center">BurpSense</h1>
+<h1 align="center">BurpSense for Cursor</h1>
+<div align="center">Burp Suite integration for VS Code and Cursor</div>
+
 <div align="center">
-  
+
 [![Build and Publish Release](https://github.com/siegfriedbolz/BurpSense/actions/workflows/release.yml/badge.svg)](https://github.com/siegfriedbolz/BurpSense/actions/workflows/release.yml)
 
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/siegfriedbolz.burpsense-cursor?include_prereleases&style=flat-square&label=Visual%20Studio%20Marketplace&color=blue)](https://marketplace.visualstudio.com/items?itemName=siegfriedbolz.burpsense-cursor)
@@ -8,13 +10,15 @@
 
 </div>
 
-BurpSense bridges the gap between security testing in Burp Suite and your development environment in VS Code. The core idea is simple: instead of constantly switching between tools to cross-reference vulnerabilities with source code, you can map Burp's findings directly to the lines where issues occur. This gives you inline diagnostics, full advisory details and a persistent record of what needs attention.
+BurpSense bridges security testing in **Burp Suite** and your editor: map findings to **lines of source code**, with inline diagnostics, full advisories, and persistent mappings.
+
+This repository is a **monorepo**: the **Java Burp bridge** lives under [`burp-bridge/`](burp-bridge/), the **VS Code / Cursor extension** under [`vscode-extension/`](vscode-extension/). For command palette, settings keys, troubleshooting, and marketplace notes specific to the editor extension, see **[vscode-extension/README.md](vscode-extension/README.md)**.
 
 ## Fork, upstream, and compatibility
 
-This repository is a **fork** of the original **BurpSense** project by **Arqsz** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense) on GitHub; VS Code Marketplace extension **`arqsz.burpsense`**). **Siegfried-Thor Bolz** maintains this fork ([siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense)) with the goal of keeping the stack compatible with **Cursor 3** (reference build: **Cursor 3.3.30**) and **Burp Suite 2026** (reference build: **v2026.4.2** Professional or Community), including the Java bridge against **Montoya** `montoya-api` **2026.4**. Standard **VS Code** on the declared `engines.vscode` line remains supported alongside Cursor.
+**BurpSense for Cursor** is a **fork** of the original **BurpSense** by **Arqsz** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense); Marketplace **`arqsz.burpsense`**). **Siegfried-Thor Bolz** maintains this fork ([siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense)) so the **bridge** and **extension** stay aligned with **Cursor 3** (reference: **3.3.30**, embedded VS Code engine **1.105.1**) and **Burp Suite v2026** (reference: **v2026.4.2**), including **Montoya** `montoya-api` **2026.4** for the Java extension. The published editor package declares **`engines.vscode` `^1.105.0`** so it installs on current **Cursor** and **VS Code 1.105+**. Use recent Cursor, VS Code, and Burp updates for the best-supported experience.
 
-![alt text](assets/main_view.png)
+![BurpSense main view](assets/main_view.png)
 
 ## What this solves?
 
@@ -32,20 +36,30 @@ The project has two components:
 
 The **Burp bridge** is a Java extension that runs inside Burp Suite. It starts an HTTP server on `localhost` (default port `1337`) and exposes your scan results through a REST API. It also maintains WebSocket connections to push updates when new issues appear or existing ones get removed. The bridge applies your filters (severity, confidence, scope) server-side, so only relevant issues get sent to clients.
 
-The **VS Code extension** connects to this bridge and displays issues in a dedicated tree view. You can browse, search, and filter findings, then map them to specific lines in your source files. Mapped issues appear as diagnostics in the Problems panel, and clicking on one opens a detailed advisory with full HTTP request/response data. When you refactor code and lines move around, the extension attempts to track those changes and adjust mappings automatically.
+The **VS Code / Cursor extension** connects to this bridge and displays issues in a dedicated tree view. You can browse, search, and filter findings, then map them to specific lines in your source files. Mapped issues appear as diagnostics in the Problems panel, and clicking on one opens a detailed advisory with full HTTP request/response data. When you refactor code and lines move around, the extension attempts to track those changes and adjust mappings automatically.
 
 Communication happens over HTTP for queries and WebSocket for real-time updates. The protocol is differential - after the initial sync, the bridge only sends what's changed (new issues, removed issues) rather than the entire dataset each time.
 
-## System requirements
+## Requirements
 
-**Burp Bridge:**
-- **Burp Suite** **v2026.4.2** (or the same **2026.4** release line; Professional or Community) with the Montoya extension API. The bridge is built against `montoya-api` **2026.4** (Maven Central), matching that Burp release train.
-- Java 21 or higher
-- Maven 3.6+ (for building from source)
+**Editor extension (VS Code or Cursor)**
 
-**VS Code Extension:**
-- **VS Code 1.105.0** or newer, or **Cursor 3** (reference: **Cursor 3.3.30** ships VS Code engine **1.105.1**). The extension declares `engines.vscode` **^1.105.0** so it installs in Cursor and current VS Code **1.x** builds.
-- Node.js 18.0.0 or higher (for building from source)
+1. **Cursor 3** (reference **3.3.30**, engine **1.105.1**) or **VS Code 1.105+** — the published extension uses `engines.vscode` **^1.105.0**.
+2. **Burp Suite v2026.4.2** (or another build on the **2026.4** line; Professional or Community) with the Montoya API, plus the **BurpSense Bridge** JAR from [Releases](https://github.com/siegfriedbolz/BurpSense/releases) or built from `burp-bridge/` (below).
+3. Node.js **18+** if you build the extension from source.
+
+**Burp bridge (Java)**
+
+- Same Burp version line as above; the bridge is compiled against `montoya-api` **2026.4** (Maven Central).
+- **Java 21+** and **Maven 3.6+** to build from source.
+
+### Manual smoke check (bridge)
+
+After loading the bridge JAR in Burp: open **BurpSense Bridge Settings**, start the server, then `GET http://<host>:<port>/health`. With issues in the site map, call `GET /issues` (with your API key if configured). Integration coverage: `mvn verify` in `burp-bridge/`.
+
+### Marketplace icon (published extension)
+
+Registries expect a **128×128 PNG** at [`vscode-extension/images/icon.png`](vscode-extension/images/icon.png). List/search thumbnails in **Cursor** / **Open VSX** / **Visual Studio Marketplace** come from store metadata after you **publish a new version** — not from a locally installed VSIX alone. Reload the editor after an update if the icon is cached.
 
 ## Installation and setup
 
@@ -66,20 +80,28 @@ Generate an API token using the "Generate New Key" button and copy it somewhere 
 
 > The bridge requires Burp Suite with the Montoya extension API (current **2026.4** Burp line).
 
-### VS Code extension
+### VS Code / Cursor extension
 
-You can install from [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=siegfriedbolz.burpsense-cursor), [Open VSX Registry](https://open-vsx.org/extension/siegfriedbolz/burpsense-cursor), a packaged VSIX or run from source:
+Install from [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=siegfriedbolz.burpsense-cursor), [Open VSX](https://open-vsx.org/extension/siegfriedbolz/burpsense-cursor), a **VSIX** from [GitHub Releases](https://github.com/siegfriedbolz/BurpSense/releases), or build from source.
 
-**From VSIX:**
+**Package a VSIX locally (same as CI `vsix` script):**
+
+```bash
+cd vscode-extension
+npm ci
+npm run vsix
+```
+
+This produces `burpsense-cursor-*.vsix`. In **VS Code** or **Cursor**, Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`) → **⋯** → **Install from VSIX**.
+
+**Equivalent without the npm script:**
 
 ```bash
 cd vscode-extension
 npm install
 npm run compile
-npx vsce package
+npx --yes @vscode/vsce package
 ```
-
-This creates `burpsense-cursor-*.vsix`. In VS Code or Cursor, go to the Extensions view (`Ctrl+Shift+X`), click the "..." menu, and select "Install from VSIX".
 
 **From source (for development):**
 
@@ -93,9 +115,9 @@ Then press `F5` in VS Code to launch the Extension Development Host with the ext
 
 ### Connecting the two
 
-After installing both components, run `BurpSense: Set API Token` from the command palette in VS Code and paste the token you generated in Burp. If everything is working, you should see `BurpSense: Connected [X issues]` in the status bar at the bottom of your editor. If it says "Disconnected", click the status bar for troubleshooting options.
+After installing both components, run **BurpSense: Set API Token** from the command palette in **VS Code** or **Cursor** and paste the token from Burp. You should see `BurpSense: Connected [X issues]` in the status bar; if not, click the status bar for diagnostics.
 
-> **First-time users**: The extension shows a welcome panel on first launch with guided setup steps. You can also access the interactive walkthrough anytime via `Command Palette` > `Get Started with BurpSense`.
+> **First-time users:** A welcome panel and walkthrough are available; see [vscode-extension/README.md](vscode-extension/README.md) for commands, settings, and troubleshooting.
 
 ## Using the extension
 
@@ -162,7 +184,7 @@ You can also export mappings to a standalone JSON file and import them in a diff
 
 ## Configuration
 
-Settings live in VS Code preferences under the "BurpSense" section:
+Settings live under **BurpSense for Cursor** in the editor preferences (namespace `burpsense-cursor.*`):
 
 ```json
 {
@@ -442,13 +464,21 @@ burpsense/
         └── extension.ts      # Entry point and activation
 ```
 
+## Security and privacy
+
+Traffic between the editor and the bridge should stay on **localhost** (`127.0.0.1` by default). API tokens are stored in the editor’s secret storage. No third-party telemetry is sent by this project; mappings are local path/line/issue data. See also the **Security & Privacy** section in [vscode-extension/README.md](vscode-extension/README.md).
+
 ## License
 
 [MIT](LICENSE.md)
 
 ## Acknowledgments
 
-- **Arqsz** — original **BurpSense** author; upstream repository [TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense) and extension **`arqsz.burpsense`** on the Visual Studio Marketplace.
-- **Siegfried-Thor Bolz** — fork maintainer: **Cursor 3** and **Burp Suite v2026** compatibility, packaging, and documentation in [siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense).
+- **Arqsz** — original **BurpSense** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense); Marketplace **`arqsz.burpsense`**).
+- **Siegfried-Thor Bolz** — fork maintainer: **Cursor 3** / **Burp Suite v2026** compatibility, packaging (`npm run vsix`), and documentation in [siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense).
 
-Built using Burp Suite's Montoya API, Undertow for HTTP/WebSocket serving, native fetch and ws for client networking, and sanitize-html for XSS protection in advisory panels.
+Built with Burp Suite’s Montoya API, Undertow (bridge HTTP/WebSocket), `ws` / `fetch` in the extension, and **sanitize-html** for advisory webviews.
+
+## Extension README
+
+Full extension-only reference (commands, settings list, marketplace icon notes): **[vscode-extension/README.md](vscode-extension/README.md)**.
