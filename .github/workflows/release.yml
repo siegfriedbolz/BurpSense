@@ -186,20 +186,27 @@ jobs:
             4. In **VS Code** or **Cursor**, run **BurpSense: Set API Token** and paste the token
             5. Start mapping issues to your code
 
+      # HaaLeo/publish-vscode-extension requires a non-empty `pat`. Skip when secrets are unset so the rest of the release (GitHub Release + assets) still succeeds.
       - name: Publish to Open VSX Registry
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.OPEN_VSX_TOKEN != '' }}
         uses: HaaLeo/publish-vscode-extension@v2
         id: publishToOpenVSX
         with:
           pat: ${{ secrets.OPEN_VSX_TOKEN }}
           baseImagesUrl: "https://github.com/siegfriedbolz/BurpSense"
           packagePath: "./vscode-extension"
+
       - name: Publish to Visual Studio Marketplace
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.VS_MARKETPLACE_TOKEN != '' }}
         uses: HaaLeo/publish-vscode-extension@v2
         with:
           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
           registryUrl: https://marketplace.visualstudio.com
-          extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
+          extensionFile: vscode-extension/burpsense-cursor-${{ steps.changelog.outputs.version }}.vsix
           baseImagesUrl: "https://github.com/siegfriedbolz/BurpSense"
           packagePath: "./vscode-extension"
+
+      - name: Skip marketplace publish (no PAT)
+        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.OPEN_VSX_TOKEN == '' && secrets.VS_MARKETPLACE_TOKEN == '' }}
+        run: |
+          echo "Skipping Open VSX and Visual Studio Marketplace: set repository secrets OPEN_VSX_TOKEN and/or VS_MARKETPLACE_TOKEN to publish. GitHub Release assets were still uploaded."
