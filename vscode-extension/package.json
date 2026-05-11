@@ -4,8 +4,9 @@
   "description": "BurpSense fork for Cursor 3 and Burp Suite v2026 — map Burp findings into VS Code/Cursor (maintainer: Siegfried-Thor Bolz; upstream: Arqsz BurpSense).",
   "version": "1.2.0",
   "publisher": "siegfriedbolz",
+  "icon": "images/icon.png",
   "engines": {
-    "vscode": "^1.118.0",
+    "vscode": "^1.105.0",
     "node": ">=18.0.0"
   },
   "categories": [
@@ -385,7 +386,7 @@
     "@eslint/js": "^9.39.2",
     "@types/node": "^25.2.0",
     "@types/sanitize-html": "^2.16.0",
-    "@types/vscode": "~1.118.0",
+    "@types/vscode": "~1.105.0",
     "@types/ws": "^8.18.1",
     "esbuild": "^0.27.2",
     "eslint": "^9.39.2",

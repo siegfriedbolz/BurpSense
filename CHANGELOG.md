@@ -10,9 +10,9 @@
 
 ### Platform
 
-* **vscode-extension:** `engines.vscode` **^1.118.0** and `@types/vscode` **~1.118.0** so current **Cursor** and recent **VS Code** releases are the supported baseline.
+* **vscode-extension:** version **1.2.0**; `engines.vscode` **^1.105.0** and `@types/vscode` **~1.105.0** so the VSIX installs in **Cursor 3.3.30** (embedded VS Code **1.105.1**) and **VS Code 1.105+** (avoid requiring **1.118+**, which current Cursor builds do not satisfy).
 * **burp-bridge:** artifact version **1.2.0** (unchanged Montoya compile target **2026.4**).
-* **docs:** README requirements updated for **Cursor 3** (reference **3.3.30**), **VS Code 1.118+**, and **Burp Suite v2026.4.2**; fork/upstream (**Arqsz** / **Siegfried-Thor Bolz**) called out in root and extension README, LICENSE, welcome panel, and walkthrough.
+* **docs:** README requirements for **Cursor 3** (reference **3.3.30**), **VS Code 1.105+**, and **Burp Suite v2026.4.2**; fork/upstream (**Arqsz** / **Siegfried-Thor Bolz**) in root and extension README, LICENSE, welcome panel, and walkthrough.
 
 ## [1.1.0](https://github.com/siegfriedbolz/BurpSense/compare/v1.0.4...v1.1.0) (2026-01-22)
 

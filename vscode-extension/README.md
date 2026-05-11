@@ -9,7 +9,7 @@ Bridge the gap between security testing in Burp Suite and your development envir
 
 ## Fork and upstream
 
-**BurpSense for Cursor** is a **fork** of the original **BurpSense** by **Arqsz** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense); Marketplace **`arqsz.burpsense`**). **Siegfried-Thor Bolz** maintains this fork ([siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense)) so the extension and bridge stay aligned with **Cursor 3** (reference: **Cursor 3.3.30**) and **Burp Suite v2026** (reference: **v2026.4.2**), including **Montoya** `montoya-api` **2026.4** for the Java bridge. Standard **VS Code** on engine **1.118+** remains supported.
+**BurpSense for Cursor** is a **fork** of the original **BurpSense** by **Arqsz** ([TheArqsz/BurpSense](https://github.com/TheArqsz/BurpSense); Marketplace **`arqsz.burpsense`**). **Siegfried-Thor Bolz** maintains this fork ([siegfriedbolz/BurpSense](https://github.com/siegfriedbolz/BurpSense)) so the extension and bridge stay aligned with **Cursor 3** (reference: **Cursor 3.3.30**, VS Code engine **1.105.1**) and **Burp Suite v2026** (reference: **v2026.4.2**), including **Montoya** `montoya-api` **2026.4** for the Java bridge. **VS Code 1.105+** and newer **1.x** releases remain supported via `engines.vscode` **^1.105.0**.
 
 Use current updates of Cursor, VS Code, and Burp for the best-supported experience.
 
@@ -69,7 +69,7 @@ Mappings are stored in `.burpsense/mappings.json` and can be committed to versio
 
 **Before using this extension, you need:**
 
-1. **Cursor 3** (reference: **3.3.30**) or **VS Code 1.118+** — the extension declares `engines.vscode` **^1.118.0**.
+1. **Cursor 3** (reference: **3.3.30**, engine **1.105.1**) or **VS Code 1.105+** — the extension declares `engines.vscode` **^1.105.0**.
 2. **Burp Suite v2026.4.2** (or the same **2026.4** line; Professional or Community) with the **Montoya** extension API. The bridge JAR is compiled against `montoya-api` **2026.4** from Maven Central.
 3. **BurpSense Bridge** - A Burp extension that exposes scan results via REST API
    - Download from [GitHub Releases](https://github.com/siegfriedbolz/BurpSense/releases)
@@ -185,6 +185,10 @@ Click the status bar for quick diagnostics and troubleshooting options.
 - API tokens are stored in VS Code's secure secret storage
 - No data is sent to external servers
 - Mappings contain only file paths, line numbers, and issue IDs
+
+## Marketplace icon
+
+The registry expects a **128×128 PNG** (`images/icon.png` in this package). The **search / list** thumbnail in Cursor comes from **Open VSX / Visual Studio Marketplace metadata**, not from a locally built VSIX alone. After changing the icon, **publish a new version** with your CI or `ovsx publish` / Marketplace upload so the store can serve the updated image (you may need to reload Cursor once).
 
 ## Credits
 

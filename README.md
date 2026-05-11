@@ -44,7 +44,7 @@ Communication happens over HTTP for queries and WebSocket for real-time updates.
 - Maven 3.6+ (for building from source)
 
 **VS Code Extension:**
-- **VS Code 1.118.0** or newer, or **Cursor 3** (reference: **Cursor 3.3.30**). The extension declares `engines.vscode` **^1.118.0**; use current Cursor/VS Code updates for full compatibility.
+- **VS Code 1.105.0** or newer, or **Cursor 3** (reference: **Cursor 3.3.30** ships VS Code engine **1.105.1**). The extension declares `engines.vscode` **^1.105.0** so it installs in Cursor and current VS Code **1.x** builds.
 - Node.js 18.0.0 or higher (for building from source)
 
 ## Installation and setup
