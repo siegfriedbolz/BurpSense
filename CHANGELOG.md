@@ -1,4 +1,12 @@
-## 0.1.0 (2026-05-11)
+## [0.1.1](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.0...v0.1.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **ci:** avoid secrets in step if expressions for marketplace publish ([9ba8980](https://github.com/siegfriedbolz/BurpSense/commit/9ba8980b8393671b03cfd5de80e01a5014164664))
+* **ci:** skip marketplace publish when registry PAT secrets are unset ([7090344](https://github.com/siegfriedbolz/BurpSense/commit/7090344a0ebfe18ce0ea22d647abc52e8a863258))
+
+## [0.1.0](https://github.com/siegfriedbolz/BurpSense/compare/57b64b8f1b73d10daa52eb33052709df6c750448...v0.1.0) (2026-05-11)
 
 
 ### ⚠ BREAKING CHANGES
