@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.1...v1.2.0) (2026-05-12)
+
+### Notes
+
+* chore(release): bump public semver to **1.2.0** for the VS Code/Cursor extension and the Burp bridge (fork release line).
+
 ## [0.1.1](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.0...v0.1.1) (2026-05-12)
 
 

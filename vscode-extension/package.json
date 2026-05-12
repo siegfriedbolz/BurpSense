@@ -2,7 +2,7 @@
   "name": "burpsense-cursor",
   "displayName": "BurpSense for Cursor",
   "description": "BurpSense fork for Cursor 3 and Burp Suite v2026 — map Burp findings into VS Code/Cursor (maintainer: Siegfried-Thor Bolz; upstream: Arqsz BurpSense).",
-  "version": "0.1.1",
+  "version": "1.2.0",
   "publisher": "siegfriedbolz",
   "icon": "images/icon.png",
   "engines": {
