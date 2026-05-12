@@ -1,8 +1,9 @@
-## [1.2.0](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.1...v1.2.0) (2026-05-12)
+## [0.1.2](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.1...v0.1.2) (2026-05-12)
 
-### Notes
 
-* chore(release): bump public semver to **1.2.0** for the VS Code/Cursor extension and the Burp bridge (fork release line).
+### Bug Fixes
+
+* **deps:** pin postcss ^8.5.10 for CVE-2026-41305 (SNYK-JS-POSTCSS-16189065) ([1fff46f](https://github.com/siegfriedbolz/BurpSense/commit/1fff46fa896f6d136b691ff887dcb8bbcc5d587b))
 
 ## [0.1.1](https://github.com/siegfriedbolz/BurpSense/compare/v0.1.0...v0.1.1) (2026-05-12)
 
