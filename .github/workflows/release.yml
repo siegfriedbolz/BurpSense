@@ -46,6 +46,9 @@ jobs:
           tag-prefix: "v"
           release-count: 0
           preset: conventionalcommits
+          # Default skip-on-empty skips the whole job when the new release notes block is empty
+          # (e.g. only chore/chore(release) commits). That leaves the workflow green but creates no tag/release.
+          skip-on-empty: false
           skip-commit: true
           git-push: false
 
