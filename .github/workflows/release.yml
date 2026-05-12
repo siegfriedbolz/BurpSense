@@ -186,9 +186,27 @@ jobs:
             4. In **VS Code** or **Cursor**, run **BurpSense: Set API Token** and paste the token
             5. Start mapping issues to your code
 
-      # HaaLeo/publish-vscode-extension requires a non-empty `pat`. Skip when secrets are unset so the rest of the release (GitHub Release + assets) still succeeds.
+      # `secrets` is not allowed in step `if:` expressions. Resolve booleans in a prior step (secrets only in `env:`).
+      - name: Resolve marketplace publish flags
+        id: registry_pats
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        run: |
+          if [ -n "$OPEN_VSX_TOKEN" ]; then
+            echo "openvsx=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "openvsx=false" >> "$GITHUB_OUTPUT"
+          fi
+          if [ -n "$VS_MARKETPLACE_TOKEN" ]; then
+            echo "vsmarket=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "vsmarket=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          OPEN_VSX_TOKEN: ${{ secrets.OPEN_VSX_TOKEN }}
+          VS_MARKETPLACE_TOKEN: ${{ secrets.VS_MARKETPLACE_TOKEN }}
+
       - name: Publish to Open VSX Registry
-        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.OPEN_VSX_TOKEN != '' }}
+        if: ${{ steps.changelog.outputs.skipped == 'false' && steps.registry_pats.outputs.openvsx == 'true' }}
         uses: HaaLeo/publish-vscode-extension@v2
         id: publishToOpenVSX
         with:
@@ -197,7 +215,7 @@ jobs:
           packagePath: "./vscode-extension"
 
       - name: Publish to Visual Studio Marketplace
-        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.VS_MARKETPLACE_TOKEN != '' }}
+        if: ${{ steps.changelog.outputs.skipped == 'false' && steps.registry_pats.outputs.vsmarket == 'true' }}
         uses: HaaLeo/publish-vscode-extension@v2
         with:
           pat: ${{ secrets.VS_MARKETPLACE_TOKEN }}
@@ -207,6 +225,6 @@ jobs:
           packagePath: "./vscode-extension"
 
       - name: Skip marketplace publish (no PAT)
-        if: ${{ steps.changelog.outputs.skipped == 'false' && secrets.OPEN_VSX_TOKEN == '' && secrets.VS_MARKETPLACE_TOKEN == '' }}
+        if: ${{ steps.changelog.outputs.skipped == 'false' && steps.registry_pats.outputs.openvsx == 'false' && steps.registry_pats.outputs.vsmarket == 'false' }}
         run: |
           echo "Skipping Open VSX and Visual Studio Marketplace: set repository secrets OPEN_VSX_TOKEN and/or VS_MARKETPLACE_TOKEN to publish. GitHub Release assets were still uploaded."
